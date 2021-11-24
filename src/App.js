@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+import currencyConverter from "./utils/currencyConverter"
+import Notification from "./components/Notification"
+import InputForm from "./components/InputForm"
+import OutputDiv from "./components/OutputDiv"
 
-function App() {
+const App = () => {
+  const [outputStr, setOutputStr] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {errorMessage
+      ?  <Notification notifString={errorMessage}/>
+      : null}
+      <InputForm setErrorMessage={setErrorMessage} setOutputStr={setOutputStr}/>
+      <OutputDiv outputStr={outputStr} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
