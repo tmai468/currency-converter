@@ -12,27 +12,38 @@ const InputForm = ({ setErrorMessage, setOutputStr }) => {
           }
           // console.log(Number(event.target.value))
         } catch (exception) {}
-        let numVer = Number(event.target.value)
-        if (isNaN(numVer)) {
-          setErrorMessage('Input has to have valid dollars and cents format')
+        // let numVer = Number(event.target.value)
+        // if (isNaN(numVer) || numVer < 0) {
+        //   setErrorMessage('Input has to have valid dollars and cents format')
+        //   setTimeout(() => setErrorMessage(null), 5000)
+        // } else {
+        setInputNum(event.target.value)
+      }
+    
+    const handleFormSubmit = (event) => {
+        event.preventDefault()
+        let outStr
+        if (isNaN(inputNum)) {
+          if (inputNum.split(",").length === 1) {
+            setInputNum('')
+            setErrorMessage('Input has to have valid dollars and cents format')
+            setTimeout(() => setErrorMessage(null), 5000)
+          } else { // replace all occurences
+            setInputNum(inputNum.replace(/,/g, ""))
+            outStr = currencyConverter(inputNum.replace(/,/g, ""), setErrorMessage, setInputNum)
+            setOutputStr(outStr)
+          }
+        } else if (inputNum < 0) {
+          setInputNum('')
+          setErrorMessage('Input has to be >= 0')
           setTimeout(() => setErrorMessage(null), 5000)
         } else {
-          setInputNum(event.target.value)
-        }
-      } 
-    
-      const handleFormSubmit = (event) => {
-        event.preventDefault()
-        const outStr = currencyConverter(inputNum, setErrorMessage, setInputNum)
-        if (outStr !== "Invalid input") {
+          outStr = currencyConverter(inputNum, setErrorMessage, setInputNum)
           setOutputStr(outStr)
+          }
         }
-        else {
-          setInputNum('')
-          setErrorMessage(outStr)
-          setTimeout(() => setErrorMessage(null), 5000)
-        }
-      }
+
+
     return (
     <form onSubmit={handleFormSubmit}>
         <div>

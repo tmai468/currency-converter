@@ -1,6 +1,6 @@
 const numToText = {
     ones: ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'SEVENTEEN', 'EIGHTEEN', 'NINETEEN'],
-    tens: ['', '', 'TWENTY', 'THIRTY', 'FOURTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHTY', 'NINETY'],
+    tens: ['', '', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHTY', 'NINETY'],
     sep: ['', ' THOUSAND ', ' MILLION ', ' BILLION ', ' TRILLION ', ' QUADRILLION ', ' QUINTILLION ', ' SEXTILLION ']
   }
   
@@ -12,8 +12,8 @@ const currencyConverter = (inputNum) => {
     if (inputNum.length === 0) {
       return ''
     }
-    inputNum = inputNum.replace(/,/, '')
     if (isNaN(inputNum)) {
+      // console.log('not a number')
       return 'Invalid input'
     }
   
@@ -30,16 +30,16 @@ const currencyConverter = (inputNum) => {
     let [dollar, cents] = inputNum.split(".")
     let centsStr = ""
     let dollarArr = []
-    console.log(dollar)
-    console.log(cents)
+    // console.log(dollar)
+    // console.log(cents)
   
     if (cents) {
       // convert decimals
       let digits
-      console.log(cents)
+      // console.log(cents)
       if (cents[0] !== '1') {
         digits = cents+"0".slice(0,2).split("")
-        console.log(digits)
+        // console.log(digits)
         centsStr = numToText.tens[+digits[0]] + " " + numToText.ones[+digits[1]]
       } else {
         if (cents.length === 1) {
@@ -47,11 +47,11 @@ const currencyConverter = (inputNum) => {
         } else {
           digits = [cents]
         }
-        console.log(digits)
-        console.log(+digits[0])
+        // console.log(digits)
+        // console.log(+digits[0])
         centsStr = numToText.ones[+digits[0]]
       }
-      console.log(centsStr)
+      // console.log(centsStr)
     }
   
     while (dollar) {
@@ -79,11 +79,11 @@ const currencyConverter = (inputNum) => {
         )
       })(dollarArr.shift()) + numToText.sep[i++] + str
     }
-    console.log(str)
-    console.log(centsStr)
-    return str + (str !== '' ? (str === 'One' ? ' Dollar ' : ' Dollars ')
+    // console.log(str)
+    // console.log(centsStr)
+    return str + (str !== '' ? (str === 'One' ? ' Dollar' : ' Dollars')
     : '') +
-      (centsStr.trim() ? (str === '' ? '' : 'and ') + centsStr + (centsStr.trim() === 'One' ? ' Cent ' : ' Cents')
+      (centsStr.trim() ? (str === '' ? '' : ' and ') + centsStr.trim() + (centsStr.trim() === 'One' ? ' Cent' : ' Cents')
       : '')
   }
 

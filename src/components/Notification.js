@@ -1,7 +1,7 @@
 const Notification = ({ notifString }) => {
-    console.log(notifString)
+    // console.log(notifString)
     return (
-      <div>
+      <div className="notif">
         {notifString}
       </div>
     )
